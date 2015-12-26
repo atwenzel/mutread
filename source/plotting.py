@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 #Local
 
-def plot_hist(xdata, ylabel):
+def plot_hist(xdata, ylabels):
     """Plots a histogram of n data sets where n == len(xdata) == len(ydata)"""
     fig = plt.figure(figsize=(6,3))
     #plt.hist(xdata, 2, normed=True)
@@ -16,10 +16,14 @@ def plot_hist(xdata, ylabel):
     ##weights = np.ones_like(xdata)/float(len(xdata))
     ##plt.hist(xdata, bins=100, weights=weights)
     ##plt.show()
-    density, bins = np.histogram(xdata, bins=100, density=True)
-    unity_density = density/density.sum()
-    bincenters = 0.5*(bins[1:]+bins[:-1])
-    plt.plot(bincenters, unity_density)
+    counter = 0
+    for dataset in xdata:
+        density, bins = np.histogram(dataset, bins=100, density=True)
+        unity_density = density/density.sum()
+        bincenters = 0.5*(bins[1:]+bins[:-1])
+        plt.plot(bincenters, unity_density, label=ylabels[counter])
+        counter += 1
+    plt.legend(loc='lower right', frameon=False, numpoints=1)
     plt.show()
 
 if __name__ == "__main__":
